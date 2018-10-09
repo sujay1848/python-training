@@ -17,13 +17,13 @@ def login(base_url,api_login,api_password):
                 'loginMode': 1}
     r = requests.post(base_url + 'auth/login', data=data_get)
     if r.ok:
-        authToken = r.headers['X-MSTR-AuthToken']
+        auth_token = r.headers['X-MSTR-AuthToken']
         cookies = dict(r.cookies)
-        print("Token: " + authToken)
-        return authToken, cookies
+        print("Token: " + auth_token)
+        return auth_token, cookies
     else:
         print("HTTP %i - %s, Message %s" % (r.status_code, r.reason, r.text))
-		
+        
 def create_cube(base_url, auth_token, cookies, project_id, cube_structure_json):
     headers_cc = {'X-MSTR-AuthToken': auth_token,
                   'Content-Type': 'application/json',#IMPORTANT!
@@ -41,9 +41,9 @@ def create_cube(base_url, auth_token, cookies, project_id, cube_structure_json):
         print("\nRemember to copy and note down Cube ID (dataset ID) and Table ID. Enter those values in the Python script 'Parameters' section")
     else:
         print("HTTP %i - %s, Message %s" % (r.status_code, r.reason, r.text))  
-		
+        
 def main():
-	token, cookies = login(base_url,api_login,api_password);
-	create_cube(base_url, token, cookies, project_id, cube_structure_json)
-	
+    token, cookies = login(base_url,api_login,api_password);
+    create_cube(base_url, token, cookies, project_id, cube_structure_json)
+    
 main()
